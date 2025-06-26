@@ -56,5 +56,5 @@ def stream_sensor_data(delay=0.1, anomaly_chance=0.05):
         time.sleep(delay)
 
 
-
-stream_sensor_data()
+if __name__ == "__main__":
+    stream_sensor_data()
