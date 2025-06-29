@@ -2,7 +2,7 @@ import streamlit as st
 import numpy as np
 import random
 from streamlit_autorefresh import st_autorefresh
-from sensor_stream_simulator import generate_sensor_reading
+from sensor_streamer import generate_sensor_reading
 from anomaly_detector import RunningStats, detect_anomalies
 
 st.title("Real-Time Predictive Maintenance Dashboard")
