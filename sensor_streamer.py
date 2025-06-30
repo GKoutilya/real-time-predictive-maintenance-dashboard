@@ -18,25 +18,35 @@ def stream_data():
     Raises:
         FileNotFoundError: If the input CSV file is not found at the expected path.
     """
-
     if not os.path.exists(input_csv):
         print(f"Error: {input_csv} not found.")
         return
     
     df = pd.read_csv(input_csv)
-
-    print("Starting real-time accelerometer stream...\n")
     for _, row in df.iterrows():
-        data = {
-            "timestamp" : row["timestamp"],
-            "accel_x" : row["accel_x"],
-            "accel_y" : row["accel_y"],
-            "accel_z" : row["accel_z"]
-        }
-        print(json.dumps(data)) # Emits one row every 100ms
-        time.sleep(0.1)
+        data = [row["accel_x"], row["accel_y"], row["accel_z"]]
+        yield data
 
-    print("\n Stream Complete.")
+def load_imu_data(filepath: str) -> pd.DataFrame:
+    """
+    Loads IMU accelerometer data from the TUM RGB-D dataset.
+
+    Args:
+        filepath (str): Path to accelerometer.txt file
+
+    Returns:
+        pd.DataFrame: DataFrame with columns ['timestamp', 'ax', 'ay', 'az']
+    """
+    df = pd.read_csv(
+        filepath,
+        delim_whitespace=True,
+        comment='#',
+        header=None,
+        usecols=[0,1,2,3],
+        names=['timestamp', 'ax', 'ay', 'az'],
+        on_bad_lines='skip'  # skip malformed lines
+    )
+    return df
 
 if __name__ == "__main__":
     """
@@ -45,3 +55,4 @@ if __name__ == "__main__":
     This function is only executed when the file is run directly.
     """
     stream_data()
+    imu_df = load_imu_data("rgbd_dataset_freiburg2_desk/accelerometer.txt")

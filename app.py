@@ -1,40 +1,61 @@
 import streamlit as st
+import torch
 import numpy as np
-import random
-from streamlit_autorefresh import st_autorefresh
-from sensor_streamer import generate_sensor_reading
-from anomaly_detector import RunningStats, detect_anomalies
+from collections import deque
+from maintenance_model import AnomalyDetectionModel
 
-st.title("Real-Time Predictive Maintenance Dashboard")
+st.title("Real-Time Predictive Maintenance Dashboard with LSTM Model")
 
-# Auto-refresh every 500 ms, limit to 100 refreshes
-count = st_autorefresh(interval=500, limit=100, key="datarefresh")
+# Model parameters - match your trained model architecture
+INPUT_DIM = 3  # e.g., accelerometer axes
+HIDDEN_DIM = 64
+NUM_LAYERS = 2
+SEQ_LEN = 50  # window size your model expects
 
-# Initialize running stats once and keep in session state
-if 'running_stats' not in st.session_state:
-    st.session_state.running_stats = RunningStats(num_sensors=5)
-running_stats = st.session_state.running_stats
+# Load model once on app startup
+@st.cache_resource  # Cache model to avoid reload on rerun
+def load_model():
+    model = AnomalyDetectionModel(INPUT_DIM, HIDDEN_DIM, NUM_LAYERS)
+    model.load_state_dict(torch.load('models/anomaly_model.pth', map_location='cpu'))
+    model.eval()
+    return model
 
-# Generate sensor reading
-reading = generate_sensor_reading()
+model = load_model()
 
-# Inject anomaly with 5% chance before updating stats
-if random.random() < 0.05:
-    anomaly_index = random.randint(0, 4)
-    anomaly_value = random.uniform(10, 15)
-    reading[anomaly_index] = anomaly_value
+# Buffer to hold recent sensor data windows for LSTM input
+if 'data_buffer' not in st.session_state:
+    # Deque with maxlen = SEQ_LEN, storing each data point as [ax, ay, az]
+    st.session_state.data_buffer = deque(maxlen=SEQ_LEN)
 
-# Update running stats with this reading (including anomaly)
-running_stats.update(reading)
+# Simulate or load your incoming sensor reading here:
+def get_new_sensor_reading():
+    # Replace with real sensor data streaming logic
+    return np.random.normal(size=(INPUT_DIM,))  # dummy 3-axis reading
 
-# Detect anomalies
-anomaly_flags = detect_anomalies(reading, running_stats)
+# Add new reading to buffer
+new_reading = get_new_sensor_reading()
+st.session_state.data_buffer.append(new_reading)
 
-st.markdown(f"**Reading #{count}**")
+st.markdown(f"### Latest Sensor Reading: {new_reading}")
 
-# Display each sensor reading, coloring anomalous ones red
-for i, value in enumerate(reading):
-    if anomaly_flags[i]:
-        st.markdown(f"Sensor {i}: <span style='color:red'>{value:.2f} ⚠️ Anomaly</span>", unsafe_allow_html=True)
+# Only run inference if buffer is full (enough time steps)
+if len(st.session_state.data_buffer) == SEQ_LEN:
+    # Prepare input tensor shape: (1, seq_len, input_dim)
+    input_window = np.array(st.session_state.data_buffer)
+    input_tensor = torch.tensor(input_window, dtype=torch.float32).unsqueeze(0)
+
+    with torch.no_grad():
+        output = model(input_tensor).squeeze()
+        anomaly_score = torch.sigmoid(output).item()
+        is_anomaly = anomaly_score > 0.5  # threshold can be tuned
+
+    st.markdown(f"### Anomaly Score: {anomaly_score:.4f}")
+    if is_anomaly:
+        st.markdown("**Anomaly Detected!**", unsafe_allow_html=True)
     else:
-        st.write(f"Sensor {i}: {value:.2f}")
+        st.markdown("Normal operation")
+else:
+    st.markdown(f"Waiting for {SEQ_LEN - len(st.session_state.data_buffer)} more data points to start anomaly detection...")
+
+# Auto-refresh every 500ms to simulate real-time streaming
+st_autorefresh = st.experimental_rerun
