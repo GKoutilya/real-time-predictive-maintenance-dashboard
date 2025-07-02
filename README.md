@@ -157,7 +157,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 **Author:** Koutilya Ganapathiraju
 
-**Email:** \[[gkoutilyaraju@gmail.com]
+**Email:** [gkoutilyaraju@gmail.com]
 
 **GitHub:** [https://github.com/GKoutilya]
 
