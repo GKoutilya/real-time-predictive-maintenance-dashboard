@@ -156,14 +156,13 @@ This project is licensed under the [MIT License](LICENSE).
 ## Contact
 
 **Author:** Koutilya Ganapathiraju
+
 **Email:** \[[gkoutilyaraju@gmail.com]
+
 **GitHub:** [https://github.com/GKoutilya]
+
 **LinkedIn:** [www.linkedin.com/in/koutilya-ganapathiraju-0a3350182]
 
 ---
 
 Thank you for exploring the Real-Time Predictive Maintenance Dashboard. Your feedback and contributions are welcome!
-
-```
-
----
