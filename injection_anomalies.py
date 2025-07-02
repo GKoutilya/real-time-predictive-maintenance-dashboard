@@ -66,3 +66,23 @@ for i in range(NUM_ANOMALIES):
 # --- Save ---
 df.to_csv(OUTPUT_PATH, index=False)
 print(f"Saved labeled data with {NUM_ANOMALIES} anomalies → {OUTPUT_PATH}")
+
+# --- Windowing and Export for Training ---
+from data_preprocessor import normalize_imu_data
+import torch
+
+df = normalize_imu_data(df)
+
+windows = []
+labels = []
+for start in range(0, len(df) - SEQ_LEN + 1, 10):  # 10 = step size
+    window = df.iloc[start:start + SEQ_LEN]
+    windows.append(window[['ax', 'ay', 'az']].values)
+    labels.append(int(window['label'].any()))
+
+windows_np = np.array(windows)
+labels_np = np.array(labels).reshape(-1, 1)
+
+np.save("imu_windows.npy", windows_np)
+np.save("imu_labels.npy", labels_np)
+print("Saved imu_windows.npy and imu_labels.npy for training.")
