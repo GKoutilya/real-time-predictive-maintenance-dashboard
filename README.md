@@ -1,8 +1,3 @@
-Here’s your README.md with the robotic sensor data (the `rgbd_dataset_freiburg2_desk` dataset) explicitly incorporated and emphasized. This highlights your use of authentic robotics data and strengthens the project’s industrial and robotics relevance:
-
----
-
-````markdown
 # Real-Time Predictive Maintenance Dashboard
 
 ---
@@ -162,11 +157,11 @@ This project is licensed under the [MIT License](LICENSE).
 
 **Author:** Koutilya Ganapathiraju
 
-**Email:** \[[gkoutilyaraju@gmail.com]
+**Email:** [gkoutilyaraju@gmail.com]
 
-**GitHub:** \[[https://github.com/GKoutilya]
+**GitHub:** [https://github.com/GKoutilya]
 
-**LinkedIn:** \[[www.linkedin.com/in/koutilya-ganapathiraju-0a3350182]
+**LinkedIn:** [www.linkedin.com/in/koutilya-ganapathiraju-0a3350182]
 
 ---
 
