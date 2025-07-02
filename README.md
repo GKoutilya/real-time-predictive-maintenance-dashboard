@@ -1,19 +1,24 @@
+Here’s your README.md with the robotic sensor data (the `rgbd_dataset_freiburg2_desk` dataset) explicitly incorporated and emphasized. This highlights your use of authentic robotics data and strengthens the project’s industrial and robotics relevance:
+
+---
+
+````markdown
 # Real-Time Predictive Maintenance Dashboard
 
 ---
 
 ## Overview
 
-Welcome to the **Real-Time Predictive Maintenance Dashboard**, a cutting-edge tool designed to empower industrial IoT and smart manufacturing by detecting anomalies in streaming sensor data — specifically accelerometer signals — using advanced deep learning techniques. This dashboard harnesses the power of **hybrid anomaly detection models**, combining the temporal strength of Long Short-Term Memory (LSTM) networks with the reconstruction capabilities of Autoencoders to identify early signs of machine failure.
+Welcome to the **Real-Time Predictive Maintenance Dashboard**, a cutting-edge tool designed to empower industrial IoT, smart manufacturing, and robotics by detecting anomalies in streaming sensor data — specifically accelerometer signals derived from robot sensors — using advanced deep learning techniques. This dashboard harnesses the power of **hybrid anomaly detection models**, combining the temporal strength of Long Short-Term Memory (LSTM) networks with the reconstruction capabilities of Autoencoders to identify early signs of machine failure.
 
-By proactively detecting abnormal behavior in equipment, this project aims to minimize downtime, optimize maintenance schedules, and ultimately save operational costs.
+By proactively detecting abnormal behavior in robotic equipment and industrial machinery, this project aims to minimize downtime, optimize maintenance schedules, and ultimately save operational costs.
 
 ---
 
 ## Key Features
 
 - **Real-Time Sensor Data Simulation**  
-  Generate realistic, continuous accelerometer data streams mimicking actual machine sensor output.
+  Generate realistic, continuous accelerometer data streams mimicking actual robot sensor outputs, including data sourced from the well-known robotics dataset `rgbd_dataset_freiburg2_desk`.
 
 - **Sliding Window Preprocessing**  
   Efficiently window and normalize time-series data for seamless model input.
@@ -29,13 +34,13 @@ By proactively detecting abnormal behavior in equipment, this project aims to mi
   Analyze precision, recall, F1-score, ROC, and Precision-Recall curves to ensure model reliability.
 
 - **Interactive Streamlit Dashboard**  
-  Visualize live sensor streams, anomaly scores, and receive instant alerts—all in a user-friendly interface.
+  Visualize live sensor streams, anomaly scores, and receive instant alerts — all in a user-friendly interface.
 
 - **Smart Alerting Mechanism**  
   Configurable desktop notifications and optional SMS alerts for critical anomalies, balancing promptness and intrusiveness.
 
 - **Multi-Modal Data Synchronization**  
-  Align accelerometer readings with RGB camera data for enriched context and fault diagnosis.
+  Align accelerometer readings with RGB camera data from robotic sensors for enriched context and fault diagnosis.
 
 ---
 
@@ -92,13 +97,13 @@ Open the local URL in your browser to explore live sensor data visualizations, m
 * **Sliding Window Size:** Default 50 timesteps (adjustable in `data_preprocessor.py`)
 * **Anomaly Thresholds:** Tune detection sensitivity in `config.py`
 * **Alert Preferences:** Enable/disable desktop or SMS alerts as needed
-* **Data Synchronization:** Configure timing offsets for accelerometer and RGB data alignment
+* **Data Synchronization:** Configure timing offsets for accelerometer and RGB data alignment from robotic sensors
 
 ---
 
 ## Dashboard Highlights
 
-* **Dynamic Time-Series Plots:** Real-time visualization of sensor data streams.
+* **Dynamic Time-Series Plots:** Real-time visualization of robot sensor data streams.
 * **Anomaly Score Overlays:** Separate displays for LSTM and Autoencoder confidence levels.
 * **Interactive Controls:** Pause/resume streaming, adjust thresholds, and switch between models seamlessly.
 * **Non-Intrusive Alerts:** Smart notifications keep you informed without disruption.
@@ -117,14 +122,14 @@ predictive-maintenance-dashboard/
 ├── utils.py                    # Helper utilities including alerting and plotting  
 ├── requirements.txt            # Python dependencies  
 ├── README.md                   # Project documentation  
-└── data/                       # Dataset storage (raw and processed)  
+└── data/                       # Dataset storage (raw and processed) including `rgbd_dataset_freiburg2_desk`  
 ```
 
 ---
 
 ## Evaluation & Performance
 
-Both models have undergone rigorous training and validation on historical accelerometer datasets. Key evaluation results include:
+Both models have undergone rigorous training and validation on historical accelerometer datasets derived from robotic sensors. Key evaluation results include:
 
 * Confusion matrices illustrating true vs. predicted anomalies
 * Precision, Recall, and F1-Score metrics for balanced performance insights
@@ -157,11 +162,11 @@ This project is licensed under the [MIT License](LICENSE).
 
 **Author:** Koutilya Ganapathiraju
 
-**Email:** [gkoutilyaraju@gmail.com]
+**Email:** \[[gkoutilyaraju@gmail.com]
 
-**GitHub:** [https://github.com/GKoutilya]
+**GitHub:** \[[https://github.com/GKoutilya]
 
-**LinkedIn:** [www.linkedin.com/in/koutilya-ganapathiraju-0a3350182]
+**LinkedIn:** \[[www.linkedin.com/in/koutilya-ganapathiraju-0a3350182]
 
 ---
 
